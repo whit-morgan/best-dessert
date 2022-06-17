@@ -7,7 +7,7 @@ require('dotenv').config()
 
 let db,
     dbConnectionStr = process.env.DB_STRING,
-    dbName = 'rap'
+    dbName = 'best-dessert'
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
@@ -22,25 +22,24 @@ app.use(express.json())
 
 
 app.get('/',(request, response)=>{
-    db.collection('rappers').find().sort({likes: -1}).toArray()
+    db.collection('desserts').find().sort({likes: -1}).toArray()
     .then(data => {
         response.render('index.ejs', { info: data })
     })
     .catch(error => console.error(error))
 })
 
-app.post('/addRapper', (request, response) => {
-    db.collection('rappers').insertOne({stageName: request.body.stageName,
-    birthName: request.body.birthName, likes: 0})
+app.post('/addDessert', (request, response) => {
+    db.collection('desserts').insertOne({dessertName: request.body.dessertName, likes: 0})
     .then(result => {
-        console.log('Rapper Added')
+        console.log('Dessert Added')
         response.redirect('/')
     })
     .catch(error => console.error(error))
 })
 
 app.put('/addOneLike', (request, response) => {
-    db.collection('rappers').updateOne({stageName: request.body.stageNameS, birthName: request.body.birthNameS,likes: request.body.likesS},{
+    db.collection('desserts').updateOne({dessertName: request.body.dessertNameS, likes: request.body.likesS},{
         $set: {
             likes:request.body.likesS + 1
           }
@@ -56,11 +55,11 @@ app.put('/addOneLike', (request, response) => {
 
 })
 
-app.delete('/deleteRapper', (request, response) => {
-    db.collection('rappers').deleteOne({stageName: request.body.stageNameS})
+app.delete('/deleteDessert', (request, response) => {
+    db.collection('desserts').deleteOne({dessertName: request.body.dessertNameS})
     .then(result => {
-        console.log('Rapper Deleted')
-        response.json('Rapper Deleted')
+        console.log('Dessert Deleted')
+        response.json('Dessert Deleted')
     })
     .catch(error => console.error(error))
 
