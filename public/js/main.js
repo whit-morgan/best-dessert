@@ -13,7 +13,7 @@ Array.from(thumbText).forEach((element)=>{
 async function deleteDessert(){
     const dName = this.parentNode.childNodes[1].innerText
     let askPW = prompt('No de-le-tay without the password :)')
-    if(askPW.toLowerCase() == 'keylimepie'){ 
+    if(askPW.toLowerCase() == 'password'){ 
         try{
             const response = await fetch('deleteDessert', {
                 method: 'delete',
