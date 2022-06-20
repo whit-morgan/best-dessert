@@ -12,14 +12,14 @@ Array.from(thumbText).forEach((element)=>{
 
 async function deleteDessert(){
     const dName = this.parentNode.childNodes[1].innerText
-    let askPW = prompt('No de-le-tay without the password :)')
-    if(askPW.toLowerCase() == 'password'){ 
+    const deletePW = prompt('No de-le-tay without the password :)') 
         try{
             const response = await fetch('deleteDessert', {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                 'dessertNameS': dName,
+                'pw': deletePW
                 })
             })
             const data = await response.json()
@@ -29,7 +29,6 @@ async function deleteDessert(){
         }catch(err){
             console.log(err)
         }
-    }
 }
 
 async function addLike(){

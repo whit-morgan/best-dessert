@@ -56,13 +56,17 @@ app.put('/addOneLike', (request, response) => {
 })
 
 app.delete('/deleteDessert', (request, response) => {
+    if(request.body.pw === process.env.DESSERT_PW){
     db.collection('desserts').deleteOne({dessertName: request.body.dessertNameS})
     .then(result => {
         console.log('Dessert Deleted')
         response.json('Dessert Deleted')
     })
     .catch(error => console.error(error))
-
+    }else{
+        console.log('Incorrect Passwword')
+        response.json({msg: 'Incorrect Password'})
+    }
 })
 
 app.listen(process.env.PORT || PORT, ()=>{
